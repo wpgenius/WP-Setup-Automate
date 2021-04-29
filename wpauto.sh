@@ -50,3 +50,4 @@ echo -e "${GREEN}Create first developer users account on ${BLUE}$foldername${NC}
 wp user create pooja pooja@wpgenius.in --role=administrator --user_pass= --display_name=pooja --send-email=y  --quiet
 wp user reset-password makarand --skip-email --quiet
 echo -e "${GREEN}Staging setup is ready ${BLUE}https://tyche.work/$foldername/${NC}"
+curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X POST https://tyche.work/$foldername/wp-login.php?action=lostpassword
