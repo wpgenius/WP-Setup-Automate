@@ -1,10 +1,16 @@
+#Shell colors  https://stackoverflow.com/a/5947802/1124612
+GREEN='\033[0;32m'
+BLUE='\033[1;34m'
+NC='\033[0m' # No Color
+
 #Create project folder. Here we consider folder name as domain name of project
-echo "Enter folder name : "
+echo -e "${GREEN}Enter folder name :${NC} "
 read foldername
 mkdir -p ~/public_html/$foldername && cd ~/public_html/$foldername
 
 #WordPress Installation
-wp core download 
+wp core download --quiet
+echo -e "${GREEN}Create databse configuration for ${BLUE}$foldername${NC}"
 wp config create --force=y --prompt=dbname,dbuser,dbpass,dbprefix
 wp core install --url=https://tyche.work/$foldername/ --admin_user=makarand --admin_email=mane.makarand@gmail.com --admin_password=p@55w0rd! --skip-email=n --prompt=title
 #Un-comment below lines if above command asks for URL parameter
@@ -12,29 +18,35 @@ wp core install --url=https://tyche.work/$foldername/ --admin_user=makarand --ad
 #wp option update home https://tyche.work/$foldername/
 
 #Install astra theme then create & switch to child theme
-wp theme install astra
+wp theme install astra --quiet
+echo -e "${GREEN}Create child theme for ${BLUE}$foldername${NC}"
 wp scaffold child-theme --author="Team WPGenius" --author_uri=https://wpgenius.in --parent_theme=astra --theme_uri=https://$foldername/ --activate=y --enable-network=y --force=y --prompt
 
 #Install necessory plugins
-wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/astra-addon-plugin.zip --activate
-wp plugin install ga-in wordpress-seo
+echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
+wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/astra-addon-plugin.zip --activate --quiet
+wp plugin install ga-in wordpress-seo --quiet
 
 #Update WordPress with default options
-wp option update blogdescription ""
-wp option update timezone_string "Asia/Kolkata"
-wp option update blog_public "yes"
-wp option update default_pingback_flag "no"
-wp option update default_ping_status "no"
-wp option update default_comment_status "no"
-wp option update comment_registration "yes"
-wp option update comment_moderation "yes"
-wp option update permalink_structure '/%postname%/'
+echo -e "${GREEN}Setting up default configuration${NC}"
+wp option update blogdescription "" --quiet
+wp option update timezone_string "Asia/Kolkata" --quiet
+wp option update blog_public 0 --quiet
+wp option update default_pingback_flag 0 --quiet
+wp option update default_ping_status 0 --quiet
+wp option update default_comment_status 0 --quiet
+wp option update comment_registration 1 --quiet
+wp option update comment_moderation 1 --quiet
+wp option update permalink_structure '/%postname%/' --quiet
 
 #Delete unwanted data
-wp plugin delete hello akismet
-wp post delete 1
-wp theme delete twentynineteen twentytwenty twentytwentyone
+echo -e "${GREEN}Removing unwanted plugins, themes & posts from ${BLUE}$foldername${NC}"
+wp plugin delete hello akismet --quiet
+wp post delete 1 --force --quiet
+wp theme delete twentynineteen twentytwenty twentytwentyone --quiet
 
 #Create additional users
-wp user create pooja pooja@wpgenius.in --role=administrator --user_pass= --display_name=pooja --send-email=y
-wp user reset-password makarand
+echo -e "${GREEN}Create first developer users account on ${BLUE}$foldername${NC}"
+wp user create pooja pooja@wpgenius.in --role=administrator --user_pass= --display_name=pooja --send-email=y  --quiet
+wp user reset-password makarand --skip-email --quiet
+echo -e "${GREEN}Staging setup is ready ${BLUE}https://tyche.work/$foldername/{NC}"
