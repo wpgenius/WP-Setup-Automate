@@ -37,3 +37,4 @@ wp theme delete twentynineteen twentytwenty twentytwentyone
 
 #Create additional users
 wp user create pooja pooja@wpgenius.in --role=administrator --user_pass= --display_name=pooja --send-email=y
+wp user reset-password makarand
