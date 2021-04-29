@@ -49,4 +49,4 @@ wp theme delete twentynineteen twentytwenty twentytwentyone --quiet
 echo -e "${GREEN}Create first developer users account on ${BLUE}$foldername${NC}"
 wp user create pooja pooja@wpgenius.in --role=administrator --user_pass= --display_name=pooja --send-email=y  --quiet
 wp user reset-password makarand --skip-email --quiet
-echo -e "${GREEN}Staging setup is ready ${BLUE}https://tyche.work/$foldername/{NC}"
+echo -e "${GREEN}Staging setup is ready ${BLUE}https://tyche.work/$foldername/${NC}"
