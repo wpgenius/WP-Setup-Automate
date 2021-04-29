@@ -20,4 +20,4 @@ wp option update comment_registration "yes"
 wp option update comment_moderation "yes"
 wp option update permalink_structure '/%postname%/'
 wp post delete 1
-wp user create pooja pooja@wpgenius.in --role=administrator --user_pass=123 --display_name=pooja --send-email=y --porcelain=y
+wp user create pooja pooja@wpgenius.in --role=administrator --user_pass= --display_name=pooja --send-email=y --porcelain=y
