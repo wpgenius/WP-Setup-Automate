@@ -9,7 +9,7 @@ wp theme install astra --activate
 wp scaffold child-theme --author=TeamWPGenius --author_uri=https://wpgenius.in --activate=y --enable-network=y --force=y --prompt
 wp theme delete twentynineteen twentytwenty twentytwentyone
 wp plugin install elementor contact-form-7 --activate
-wp plugin install ga-in wordpress-seo
+wp plugin install ga-in wordpress-seo wp https://wpgenius.github.io/WP-Setup-Automate/astra-addon-plugin.zip
 wp option update blogdescription ""
 wp option update timezone_string "Asia/Kolkata"
 wp option update blog_public "yes"
