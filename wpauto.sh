@@ -6,8 +6,10 @@ wp config create --force=y --prompt=dbname,dbuser,dbpass,dbprefix
 wp core install --admin_user=makarand --admin_email=mane.makarand@gmail.com --skip-email=n --prompt
 wp plugin delete hello akismet
 wp theme install astra --activate
+wp scaffold child-theme --author=WPGenius --author_uri=WPGenius --activate=y --enable-network=y --force=y --prompt
 wp theme delete twentynineteen twentytwenty twentytwentyone
-wp plugin install elementor contact-form-7 wordpress-seo --activate
+wp plugin install elementor contact-form-7 --activate
+wp plugin install ga-google-analytics wordpress-seo
 wp option update blogdescription ""
 wp option update timezone_string "Asia/Kolkata"
 wp option update blog_public "yes"
