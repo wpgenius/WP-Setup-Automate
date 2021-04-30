@@ -37,6 +37,10 @@ wp option update default_ping_status 0 --quiet
 wp option update default_comment_status 0 --quiet
 wp option update comment_registration 1 --quiet
 wp option update comment_moderation 1 --quiet
+wp option update show_on_front "page" --quiet
+wp option update page_on_front "2" --quiet
+wp option update elementor_disable_color_schemes "yes" --quiet
+wp option update elementor_disable_typography_schemes "yes" --quiet
 wp option update permalink_structure '/%postname%/' --quiet
 
 #Delete unwanted data
