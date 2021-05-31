@@ -25,7 +25,7 @@ wp scaffold child-theme --author="Team WPGenius" --author_uri=https://wpgenius.i
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
 wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/astra-addon-plugin.zip --activate --quiet
-wp plugin install ga-in wordpress-seo --quiet
+wp plugin install ga-in wordpress-seo advanced-cf7-db --quiet
 
 #Update WordPress with default options
 echo -e "${GREEN}Setting up default configuration${NC}"
