@@ -11,16 +11,17 @@ mkdir -p ~/public_html/$foldername && cd ~/public_html/$foldername
 #WordPress Installation
 wp core download --quiet
 echo -e "${GREEN}Create databse configuration for ${BLUE}$foldername${NC}"
-wp config create --force=y --prompt=dbname,dbuser,dbpass,dbprefix
-wp core install --url=https://tyche.work/$foldername/ --admin_user=makarand --admin_email=mane.makarand@gmail.com --admin_password=p@55w0rd! --skip-email=n --prompt=title
+wp config create --force=y --prompt=dbname,dbuser,dbpass,dbprefix --quiet
+wp core install --url=https://tyche.work/$foldername/ --admin_user=makarand --admin_email=mane.makarand@gmail.com --admin_password=p@55w0rd! --skip-email=n --prompt=title --quiet
 #Un-comment below lines if above command asks for URL parameter
 #wp option update siteurl https://tyche.work/$foldername/
 #wp option update home https://tyche.work/$foldername/
+echo -e "${GREEN}WordPress installed & configured : ${BLUE}https://tyche.work/$foldername${NC}"
 
 #Install astra theme then create & switch to child theme
 wp theme install astra --quiet
 echo -e "${GREEN}Create child theme for ${BLUE}$foldername${NC}"
-wp scaffold child-theme --author="Team WPGenius" --author_uri=https://wpgenius.in --parent_theme=astra --theme_uri=https://$foldername/ --activate=y --enable-network=y --force=y --prompt
+wp scaffold child-theme --author="Team WPGenius" --author_uri=https://wpgenius.in --parent_theme=astra --theme_uri=https://$foldername/ --activate=y --enable-network=y --force=y --prompt --quiet
 
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
