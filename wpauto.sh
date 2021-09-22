@@ -31,6 +31,17 @@ echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
 wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/astra-addon-plugin.zip --activate --quiet
 wp plugin install ga-in wordpress-seo advanced-cf7-db --quiet
 
+#Activate astra pro
+pro_key=~/.astra-pro
+if [ -r "$pro_key" ]; then
+	echo -e "${BLUE}Astra pro key found.${NC}"
+	astra_pro_key=$(<"$pro_key")
+	if [ -n "$astra_pro_key" ]; then
+		wp brainstormforce license activate astra-addon "$astra_pro_key"
+		wp plugin update astra-addon --quiet
+	fi
+fi
+
 #Update WordPress with default options
 echo -e "${GREEN}Setting up default configuration${NC}"
 wp option update blogdescription "" --quiet
