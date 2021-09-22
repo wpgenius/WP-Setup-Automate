@@ -1,3 +1,4 @@
+#!/bin/bash
 #Shell colors  https://stackoverflow.com/a/5947802/1124612
 GREEN='\033[0;32m'
 BLUE='\033[1;34m'
