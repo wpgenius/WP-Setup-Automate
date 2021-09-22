@@ -5,7 +5,9 @@ NC='\033[0m' # No Color
 
 #Create project folder. Here we consider folder name as domain name of project
 echo -e "${GREEN}Enter folder name :${NC} "
-read foldername
+while [[ $foldername = "" ]]; do
+   read foldername
+done
 mkdir -p ~/public_html/$foldername && cd ~/public_html/$foldername
 
 #WordPress Installation
