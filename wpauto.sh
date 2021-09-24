@@ -30,7 +30,7 @@ wp scaffold child-theme --author="Team WPGenius" --author_uri=https://wpgenius.i
 
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
-wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/astra-addon-plugin.zip --activate --quiet
+wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip --activate --quiet
 wp plugin install ga-in wordpress-seo advanced-cf7-db --quiet
 
 #Activate astra pro
@@ -41,6 +41,17 @@ if [ -r "$pro_key" ]; then
 	if [ -n "$astra_pro_key" ]; then
 		wp brainstormforce license activate astra-addon "$astra_pro_key"
 		wp plugin update astra-addon --quiet
+	fi
+fi
+
+#Activate Ultimate addon for elementor
+uae_key=~/.uae-pro
+if [ -r "$uae_key" ]; then
+	echo -e "${BLUE}Ultimate addon for elementor key found.${NC}"
+	uae_pro_key=$(<"$uae_key")
+	if [ -n "$uae_pro_key" ]; then
+		wp brainstormforce license activate ultimate-elementor "$uae_pro_key"
+		wp plugin update ultimate-elementor --quiet
 	fi
 fi
 
