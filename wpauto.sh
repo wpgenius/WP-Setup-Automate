@@ -50,7 +50,7 @@ if [ -r "$uae_key" ]; then
 	echo -e "${BLUE}Ultimate addon for elementor key found.${NC}"
 	uae_pro_key=$(<"$uae_key")
 	if [ -n "$uae_pro_key" ]; then
-		wp brainstormforce license activate ultimate-elementor "$uae_pro_key"
+		wp brainstormforce license activate uael "$uae_pro_key"
 		wp plugin update ultimate-elementor --quiet
 	fi
 fi
