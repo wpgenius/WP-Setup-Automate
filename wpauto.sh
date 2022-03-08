@@ -75,7 +75,7 @@ wp option update permalink_structure '/%postname%/' --quiet
 echo -e "${GREEN}Removing unwanted plugins, themes & posts from ${BLUE}$foldername${NC}"
 wp plugin delete hello akismet --quiet
 wp post delete 1 --force --quiet
-wp theme delete twentynineteen twentytwenty twentytwentyone --quiet
+wp theme delete twentynineteen twentytwenty twentytwentyone twentytwentytwo --quiet
 
 #Create additional users
 echo -e "${GREEN}Create first developer users account on ${BLUE}$foldername${NC}"
