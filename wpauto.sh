@@ -77,6 +77,13 @@ wp plugin delete hello akismet --quiet
 wp post delete 1 --force --quiet
 wp theme delete twentynineteen twentytwenty twentytwentyone twentytwentytwo --quiet
 
+wp config set DISALLOW_FILE_EDIT true --raw
+wp config set EMPTY_TRASH_DAYS 60 --raw
+wp config set WP_POST_REVISIONS 40 --raw
+wp config set AUTOSAVE_INTERVAL 180 --raw
+wp config set WP_MEMORY_LIMIT 256M
+wp config set WP_ENVIRONMENT_TYPE staging
+
 #Create additional users
 echo -e "${GREEN}Create first developer users account on ${BLUE}$foldername${NC}"
 wp user create pooja pooja@wpgenius.in --role=administrator --user_pass= --display_name=pooja --send-email=y  --quiet
