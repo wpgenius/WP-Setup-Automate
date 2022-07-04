@@ -30,7 +30,7 @@ wp scaffold child-theme --author="Team WPGenius" --author_uri=https://wpgenius.i
 
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
-wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip --activate --quiet
+wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip --activate --quiet
 wp plugin install ga-in wordpress-seo advanced-cf7-db --quiet
 
 #Activate astra pro
@@ -52,6 +52,18 @@ if [ -r "$uae_key" ]; then
 	if [ -n "$uae_pro_key" ]; then
 		wp brainstormforce license activate uael "$uae_pro_key"
 		wp plugin update ultimate-elementor --quiet
+	fi
+fi
+
+
+#Activate Premium Starter sites
+pst_key=~/.pst-pro
+if [ -r "$pst_key" ]; then
+	echo -e "${BLUE}Premium Starter sites key found.${NC}"
+	pst_pro_key=$(<"$pst_key")
+	if [ -n "$pst_pro_key" ]; then
+		wp brainstormforce license activate astra-pro-sites "$pst_pro_key"
+		wp plugin update astra-pro-sites --quiet
 	fi
 fi
 
