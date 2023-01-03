@@ -99,7 +99,7 @@ wp config set WP_ENVIRONMENT_TYPE staging
 
 #Create additional users
 echo -e "${GREEN}Create first developer users account on ${BLUE}$foldername${NC}"
-wp user create snehal snehal@wpgenius.in --role=administrator --user_pass= --display_name=soham --send-email=y  --quiet
+wp user create snehal snehal@wpgenius.in --role=administrator --user_pass= --display_name=snehal --send-email=y  --quiet
 wp user reset-password makarand --skip-email --quiet
 echo -e "${GREEN}Staging setup is ready ${BLUE}$URL ${NC}"
 curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X POST "$URL"wp-login.php?action=lostpassword
