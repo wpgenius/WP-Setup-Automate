@@ -23,6 +23,8 @@ wp core install --url="$URL" --admin_user=makarand --admin_email=mane.makarand@g
 #wp option update home "$URL"
 echo -e "${GREEN}WordPress installed & configured : ${BLUE}$URL ${NC}"
 
+wp config set WP_MEMORY_LIMIT 256M
+
 #Install astra theme then create & switch to child theme
 wp theme install astra --quiet
 echo -e "${GREEN}Create child theme for ${BLUE}$foldername${NC}"
@@ -93,7 +95,6 @@ wp config set DISALLOW_FILE_EDIT true --raw
 wp config set EMPTY_TRASH_DAYS 60 --raw
 wp config set WP_POST_REVISIONS 40 --raw
 wp config set AUTOSAVE_INTERVAL 180 --raw
-wp config set WP_MEMORY_LIMIT 256M
 wp config set WP_ENVIRONMENT_TYPE staging
 
 #Create additional users
