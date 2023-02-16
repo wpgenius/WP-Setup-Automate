@@ -96,6 +96,7 @@ wp config set EMPTY_TRASH_DAYS 60 --raw
 wp config set WP_POST_REVISIONS 40 --raw
 wp config set AUTOSAVE_INTERVAL 180 --raw
 wp config set WP_ENVIRONMENT_TYPE staging
+wp config set WP_DISABLE_FATAL_ERROR_HANDLER true --raw
 
 #Create additional users
 echo -e "${GREEN}Create first developer users account on ${BLUE}$foldername${NC}"
