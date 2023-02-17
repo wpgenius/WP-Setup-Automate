@@ -47,6 +47,8 @@ done
 
 #Choices
 read -p "Do you wish to add default files to child theme? (Yes/No) " child_theme_default_files_yn
+read -p "Do you wish to install Astra WP portfolio plugin? (Yes/No) " portfolio_yn
+
 mkdir -p ~/public_html/$foldername && cd ~/public_html/$foldername
 
 URL=https://tyche.work/$foldername/
@@ -105,6 +107,22 @@ if [ -r "$pst_key" ]; then
 		wp brainstormforce license activate astra-pro-sites "$pst_pro_key"
 	fi
 fi
+
+#Install Astra wp portfolio plugin if choosen to do so.
+case $portfolio_yn in
+    [Yy]* ) 
+    wp plugin install https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-portfolio.zip --activate --quiet
+    #Activate Premium Starter sites
+    wpp_key=~/.wpp-pro
+    if [ -r "$wpp_key" ]; then
+    	echo -e "${BLUE}Astra WP Portfolio key found.${NC}"
+    	wpp_pro_key=$(<"$wpp_key")
+    	if [ -n "$wpp_pro_key" ]; then
+    		wp brainstormforce license activate astra-portfolio "$wpp_pro_key"
+    	fi
+    fi
+    ;;
+esac
 
 #Update WordPress with default options
 echo -e "${GREEN}Setting up default configuration${NC}"
