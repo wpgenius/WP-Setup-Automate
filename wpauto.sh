@@ -45,6 +45,10 @@ while [[ $dev_name = "" ]]; do
    read dev_name
 done
 
+#Choices
+read -p "Do you wish to add default files to child theme? (Yes/No) " child_theme_default_files_yn
+read -p "Do you wish to install Astra WP portfolio plugin? (Yes/No) " portfolio_yn
+
 mkdir -p ~/public_html/$foldername && cd ~/public_html/$foldername
 
 URL=https://tyche.work/$foldername/
@@ -72,7 +76,7 @@ wp scaffold child-theme $theme_slug --theme_name="$TITLE theme" --author="Team W
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
 wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip --activate --quiet
-wp plugin install ga-in wordpress-seo advanced-cf7-db --quiet
+wp plugin install wordpress-seo advanced-cf7-db --quiet
 
 #Activate astra pro
 pro_key=~/.astra-pro
@@ -103,6 +107,22 @@ if [ -r "$pst_key" ]; then
 		wp brainstormforce license activate astra-pro-sites "$pst_pro_key"
 	fi
 fi
+
+#Install Astra wp portfolio plugin if choosen to do so.
+case $portfolio_yn in
+    [Yy]* ) 
+    wp plugin install https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-portfolio.zip --activate --quiet
+    #Activate Premium Starter sites
+    wpp_key=~/.wpp-pro
+    if [ -r "$wpp_key" ]; then
+    	echo -e "${BLUE}Astra WP Portfolio key found.${NC}"
+    	wpp_pro_key=$(<"$wpp_key")
+    	if [ -n "$wpp_pro_key" ]; then
+    		wp brainstormforce license activate astra-portfolio "$wpp_pro_key"
+    	fi
+    fi
+    ;;
+esac
 
 #Update WordPress with default options
 echo -e "${GREEN}Setting up default configuration${NC}"
@@ -145,3 +165,11 @@ wp user create $dev_name $dev_name@wpgenius.in --role=administrator --user_pass=
 wp user reset-password makarand --skip-email --quiet
 echo -e "${GREEN}Staging setup is ready ${BLUE}$URL ${NC}"
 curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X POST "$URL"wp-login.php?action=lostpassword
+
+#Add default files to child theme
+case $child_theme_default_files_yn in
+    [Yy]* ) 
+    cd wp-content/themes/ && wget https://github.com/wpgenius/Astra-Child-Theme/archive/refs/heads/main.zip -q && unzip -q main.zip && rm Astra-Child-Theme-main/style.css main.zip
+    mv Astra-Child-Theme-main/* $theme_slug && rm -r Astra-Child-Theme-main
+    ;;
+esac
