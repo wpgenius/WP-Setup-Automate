@@ -67,7 +67,7 @@ wp config set WP_MEMORY_LIMIT 256M  --quiet
 #Install astra theme then create & switch to child theme
 wp theme install astra --quiet
 echo -e "${GREEN}Creating child theme for ${BLUE}$foldername${NC}"
-wp scaffold child-theme slug=$theme_slug --theme_name="$TITLE theme" --author="Team WPGenius" --author_uri=https://wpgenius.in --parent_theme=astra --theme_uri=https://$foldername/ --activate=y --enable-network=y --force=y --prompt --quiet
+wp scaffold child-theme $theme_slug --theme_name="$TITLE theme" --author="Team WPGenius" --author_uri=https://wpgenius.in --parent_theme=astra --theme_uri=https://$foldername/ --activate=y --enable-network=y --force=y --prompt --quiet
 
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
