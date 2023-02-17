@@ -135,6 +135,7 @@ wp config set WP_POST_REVISIONS 40 --raw --quiet
 wp config set AUTOSAVE_INTERVAL 180 --raw --quiet
 wp config set WP_ENVIRONMENT_TYPE staging --quiet
 wp config set WP_DISABLE_FATAL_ERROR_HANDLER true --raw --quiet
+wp config set WP_DEFAULT_THEME astra --quiet
 
 #Create additional users
 echo -e "${GREEN}Creating first developer ${BLUE}$dev_name's ${GREEN}account on ${BLUE}$foldername${NC}"
