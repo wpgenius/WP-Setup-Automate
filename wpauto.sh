@@ -74,7 +74,7 @@ wp scaffold child-theme $theme_slug --theme_name="$TITLE theme" --author="Team W
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
 wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip --activate --quiet
-wp plugin install ga-in wordpress-seo advanced-cf7-db --quiet
+wp plugin install wordpress-seo advanced-cf7-db --quiet
 
 #Activate astra pro
 pro_key=~/.astra-pro
