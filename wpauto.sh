@@ -81,7 +81,6 @@ if [ -r "$pro_key" ]; then
 	astra_pro_key=$(<"$pro_key")
 	if [ -n "$astra_pro_key" ]; then
 		wp brainstormforce license activate astra-addon "$astra_pro_key"
-		wp plugin update astra-addon --quiet
 	fi
 fi
 
@@ -92,7 +91,6 @@ if [ -r "$uae_key" ]; then
 	uae_pro_key=$(<"$uae_key")
 	if [ -n "$uae_pro_key" ]; then
 		wp brainstormforce license activate uael "$uae_pro_key"
-		wp plugin update ultimate-elementor --quiet
 	fi
 fi
 
@@ -103,7 +101,6 @@ if [ -r "$pst_key" ]; then
 	pst_pro_key=$(<"$pst_key")
 	if [ -n "$pst_pro_key" ]; then
 		wp brainstormforce license activate astra-pro-sites "$pst_pro_key"
-		wp plugin update astra-pro-sites --quiet
 	fi
 fi
 
@@ -128,6 +125,10 @@ echo -e "${GREEN}Removing unwanted plugins, themes & posts from ${BLUE}$folderna
 wp plugin delete hello akismet --quiet
 wp post delete 1 --force --quiet
 wp theme delete twentytwentyone twentytwentytwo twentytwentythree --quiet
+
+#Update all plugins that have updates will be updated
+wp cron event run wp_update_plugins --quiet
+wp plugin update --all --quiet
 
 wp config set DISALLOW_FILE_EDIT true --raw --quiet
 wp config set EMPTY_TRASH_DAYS 60 --raw --quiet
