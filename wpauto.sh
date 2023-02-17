@@ -130,6 +130,7 @@ wp theme delete twentytwentyone twentytwentytwo twentytwentythree --quiet
 wp cron event run wp_update_plugins --quiet
 wp plugin update --all --quiet
 
+#Necessory config file variable
 wp config set DISALLOW_FILE_EDIT true --raw --quiet
 wp config set EMPTY_TRASH_DAYS 60 --raw --quiet
 wp config set WP_POST_REVISIONS 40 --raw --quiet
