@@ -23,7 +23,7 @@ wp core install --url="$URL" --admin_user=makarand --admin_email=mane.makarand@g
 #wp option update home "$URL"
 echo -e "${GREEN}WordPress installed & configured : ${BLUE}$URL ${NC}"
 
-wp config set WP_MEMORY_LIMIT 256M
+wp config set WP_MEMORY_LIMIT 256M  --quiet
 
 #Install astra theme then create & switch to child theme
 wp theme install astra --quiet
@@ -91,11 +91,12 @@ wp plugin delete hello akismet --quiet
 wp post delete 1 --force --quiet
 wp theme delete twentynineteen twentytwenty twentytwentyone twentytwentytwo twentytwentythree --quiet
 
-wp config set DISALLOW_FILE_EDIT true --raw
-wp config set EMPTY_TRASH_DAYS 60 --raw
-wp config set WP_POST_REVISIONS 40 --raw
-wp config set AUTOSAVE_INTERVAL 180 --raw
-wp config set WP_ENVIRONMENT_TYPE staging
+wp config set DISALLOW_FILE_EDIT true --raw --quiet
+wp config set EMPTY_TRASH_DAYS 60 --raw --quiet
+wp config set WP_POST_REVISIONS 40 --raw --quiet
+wp config set AUTOSAVE_INTERVAL 180 --raw --quiet
+wp config set WP_ENVIRONMENT_TYPE staging --quiet
+wp config set WP_DISABLE_FATAL_ERROR_HANDLER true --raw --quiet
 
 #Create additional users
 echo -e "${GREEN}Create first developer users account on ${BLUE}$foldername${NC}"
