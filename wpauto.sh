@@ -145,3 +145,7 @@ wp user create $dev_name $dev_name@wpgenius.in --role=administrator --user_pass=
 wp user reset-password makarand --skip-email --quiet
 echo -e "${GREEN}Staging setup is ready ${BLUE}$URL ${NC}"
 curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X POST "$URL"wp-login.php?action=lostpassword
+
+#Add default files to child theme
+cd wp-content/themes/ && wget https://github.com/wpgenius/Astra-Child-Theme/archive/refs/heads/main.zip -q && unzip -q main.zip && rm Astra-Child-Theme-main/style.css main.zip
+mv Astra-Child-Theme-main/* $theme_slug && rm -r Astra-Child-Theme-main
