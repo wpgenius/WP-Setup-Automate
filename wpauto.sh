@@ -127,7 +127,7 @@ wp option update permalink_structure '/%postname%/' --quiet
 echo -e "${GREEN}Removing unwanted plugins, themes & posts from ${BLUE}$foldername${NC}"
 wp plugin delete hello akismet --quiet
 wp post delete 1 --force --quiet
-wp theme delete twentynineteen twentytwenty twentytwentyone twentytwentytwo twentytwentythree --quiet
+wp theme delete twentytwentyone twentytwentytwo twentytwentythree --quiet
 
 wp config set DISALLOW_FILE_EDIT true --raw --quiet
 wp config set EMPTY_TRASH_DAYS 60 --raw --quiet
