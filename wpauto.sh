@@ -150,6 +150,13 @@ wp theme delete twentytwentyone twentytwentytwo twentytwentythree --quiet
 wp cron event run wp_update_plugins --quiet
 wp plugin update --all --quiet
 
+#Create additional users
+echo -e "${GREEN}Creating first developer ${BLUE}$dev_name's ${GREEN}account on ${BLUE}$foldername${NC}"
+wp user create $dev_name $dev_name@wpgenius.in --role=administrator --user_pass= --display_name=$dev_name --send-email=y  --quiet
+wp user reset-password makarand --skip-email --quiet
+
+curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X POST "$URL"wp-login.php?action=lostpassword
+
 #Necessory config file variable
 wp config set DISALLOW_FILE_EDIT true --raw --quiet
 wp config set EMPTY_TRASH_DAYS 60 --raw --quiet
@@ -158,13 +165,6 @@ wp config set AUTOSAVE_INTERVAL 180 --raw --quiet
 wp config set WP_ENVIRONMENT_TYPE staging --quiet
 wp config set WP_DISABLE_FATAL_ERROR_HANDLER true --raw --quiet
 wp config set WP_DEFAULT_THEME astra --quiet
-
-#Create additional users
-echo -e "${GREEN}Creating first developer ${BLUE}$dev_name's ${GREEN}account on ${BLUE}$foldername${NC}"
-wp user create $dev_name $dev_name@wpgenius.in --role=administrator --user_pass= --display_name=$dev_name --send-email=y  --quiet
-wp user reset-password makarand --skip-email --quiet
-
-curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X POST "$URL"wp-login.php?action=lostpassword
 
 #Add default files to child theme
 case $child_theme_default_files_yn in
