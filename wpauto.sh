@@ -169,13 +169,14 @@ curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X
 #Add default files to child theme
 case $child_theme_default_files_yn in
     [Yy]* )
-    echo -e "${GREEN}Adding default files to child theme...{NC}"
+    echo -e "${GREEN}Adding default files to child theme...${NC}"
     cd wp-content/themes/ && wget https://github.com/wpgenius/Astra-Child-Theme/archive/refs/heads/main.zip -q && unzip -q main.zip && rm Astra-Child-Theme-main/style.css main.zip
     mv Astra-Child-Theme-main/* $theme_slug && rm -r Astra-Child-Theme-main
     wp easy_setup
     #Import custom layouts
+    echo -e "${GREEN}Importing custom layouts for 404 template & analytics code...${NC}"
     wp plugin install wordpress-importer --activate --quiet
-    wget https://raw.githubusercontent.com/wpgenius/WP-Setup-Automate/main/bundle/custom-layouts.xml -q && wp import custom-layouts.xml --authors=create
+    wget https://raw.githubusercontent.com/wpgenius/WP-Setup-Automate/main/bundle/custom-layouts.xml -q && wp import custom-layouts.xml --authors=create --quiet
     wp plugin deactivate wordpress-importer --quiet && wp plugin delete wordpress-importer --quiet
     ;;
 esac
