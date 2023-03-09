@@ -175,4 +175,7 @@ case $child_theme_default_files_yn in
     ;;
 esac
 
+#Flush rewrite rules
+wp rewrite flush --quiet
+
 echo -e "${GREEN}Staging setup is ready ${BLUE}$URL ${NC}"
