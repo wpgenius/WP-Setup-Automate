@@ -173,6 +173,10 @@ case $child_theme_default_files_yn in
     cd wp-content/themes/ && wget https://github.com/wpgenius/Astra-Child-Theme/archive/refs/heads/main.zip -q && unzip -q main.zip && rm Astra-Child-Theme-main/style.css main.zip
     mv Astra-Child-Theme-main/* $theme_slug && rm -r Astra-Child-Theme-main
     wp easy_setup
+    #Import custom layouts
+    wp plugin install wordpress-importer --activate --quiet
+    wget https://raw.githubusercontent.com/wpgenius/WP-Setup-Automate/main/bundle/custom-layouts.xml -q && wp import custom-layouts.xml --authors=create
+    wp plugin deactivate wordpress-importer --quiet && wp plugin delete wordpress-importer --quiet
     ;;
 esac
 
