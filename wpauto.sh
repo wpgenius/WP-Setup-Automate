@@ -184,4 +184,4 @@ esac
 #Flush rewrite rules
 wp rewrite flush --quiet
 
-echo -e "${GREEN}Staging setup is ready ${BLUE}$URL ${NC}"
+echo -e "\n${GREEN}Staging setup is ready ${BLUE}$URL ${NC}"
