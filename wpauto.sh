@@ -177,7 +177,7 @@ case $child_theme_default_files_yn in
     #Import custom layouts
     echo -e "${GREEN}Importing custom layouts for 404 template & analytics code...${NC}"
     wp plugin install wordpress-importer --activate --quiet
-    wget https://raw.githubusercontent.com/wpgenius/WP-Setup-Automate/main/bundle/custom-layouts.xml -q && wp import custom-layouts.xml --authors=create --quiet
+    wget https://raw.githubusercontent.com/wpgenius/WP-Setup-Automate/main/bundle/custom-layouts.xml -q && wp import custom-layouts.xml --authors=create --quiet && rm custom-layouts.xml
     wp plugin deactivate wordpress-importer --quiet && wp plugin delete wordpress-importer --quiet
     ;;
 esac
