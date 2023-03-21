@@ -172,6 +172,9 @@ case $child_theme_default_files_yn in
     echo -e "${GREEN}Adding default files to child theme...${NC}"
     cd wp-content/themes/ && wget https://github.com/wpgenius/Astra-Child-Theme/archive/refs/heads/main.zip -q && unzip -q main.zip && rm Astra-Child-Theme-main/style.css main.zip
     mv Astra-Child-Theme-main/* $theme_slug && rm -r Astra-Child-Theme-main
+    #Replace words in child theme
+    find ./ -type f -exec sed -i "s/Astra Child Theme/$TITLE/gI"  {} \;
+    find ./ -type f -exec sed -i "s/astra-child-theme/$theme_slug/g"  {} \;
     #Now fire command made in child theme
     wp easy_setup    
     #Import custom layouts
