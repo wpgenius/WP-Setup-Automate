@@ -150,6 +150,13 @@ wp theme delete twentytwentyone twentytwentytwo twentytwentythree --quiet
 wp cron event run wp_update_plugins --quiet
 wp plugin update --all --quiet
 
+#Create additional users
+echo -e "${GREEN}Creating first developer ${BLUE}$dev_name's ${GREEN}account on ${BLUE}$foldername${NC}"
+wp user create $dev_name $dev_name@wpgenius.in --role=administrator --user_pass= --display_name=$dev_name --send-email=y  --quiet
+wp user reset-password makarand --skip-email --quiet
+
+curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X POST "$URL"wp-login.php?action=lostpassword
+
 #Necessory config file variable
 wp config set DISALLOW_FILE_EDIT true --raw --quiet
 wp config set EMPTY_TRASH_DAYS 60 --raw --quiet
@@ -159,17 +166,26 @@ wp config set WP_ENVIRONMENT_TYPE staging --quiet
 wp config set WP_DISABLE_FATAL_ERROR_HANDLER true --raw --quiet
 wp config set WP_DEFAULT_THEME astra --quiet
 
-#Create additional users
-echo -e "${GREEN}Creating first developer ${BLUE}$dev_name's ${GREEN}account on ${BLUE}$foldername${NC}"
-wp user create $dev_name $dev_name@wpgenius.in --role=administrator --user_pass= --display_name=$dev_name --send-email=y  --quiet
-wp user reset-password makarand --skip-email --quiet
-echo -e "${GREEN}Staging setup is ready ${BLUE}$URL ${NC}"
-curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X POST "$URL"wp-login.php?action=lostpassword
-
 #Add default files to child theme
 case $child_theme_default_files_yn in
-    [Yy]* ) 
+    [Yy]* )
+    echo -e "${GREEN}Adding default files to child theme...${NC}"
     cd wp-content/themes/ && wget https://github.com/wpgenius/Astra-Child-Theme/archive/refs/heads/main.zip -q && unzip -q main.zip && rm Astra-Child-Theme-main/style.css main.zip
     mv Astra-Child-Theme-main/* $theme_slug && rm -r Astra-Child-Theme-main
+    #Replace words in child theme
+    find ./ -type f -exec sed -i "s/Astra Child Theme/$TITLE/gI"  {} \;
+    find ./ -type f -exec sed -i "s/astra-child-theme/$theme_slug/g"  {} \;
+    #Now fire command made in child theme
+    wp easy_setup    
+    #Import custom layouts
+    echo -e "${GREEN}Importing custom layouts for 404 template & analytics code...${NC}"
+    wp plugin install wordpress-importer --activate --quiet
+    wget https://raw.githubusercontent.com/wpgenius/WP-Setup-Automate/main/bundle/custom-layouts.xml -q && wp import custom-layouts.xml --authors=create --quiet && rm custom-layouts.xml
+    wp plugin deactivate wordpress-importer --quiet && wp plugin delete wordpress-importer --quiet
     ;;
 esac
+
+#Flush rewrite rules
+wp rewrite flush --quiet
+
+echo -e "\n${GREEN}Staging setup is ready ${BLUE}$URL ${NC}"
