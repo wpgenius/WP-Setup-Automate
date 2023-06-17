@@ -182,6 +182,7 @@ case $child_theme_default_files_yn in
     wp plugin install wordpress-importer --activate --quiet
     wget https://raw.githubusercontent.com/wpgenius/WP-Setup-Automate/main/bundle/custom-layouts.xml -q && wp import custom-layouts.xml --authors=create --quiet && rm custom-layouts.xml
     wp plugin deactivate wordpress-importer --quiet && wp plugin delete wordpress-importer --quiet
+    wp theme activate astra && wp option delete WPG_child_activate
     ;;
 esac
 
