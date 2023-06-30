@@ -47,6 +47,7 @@ done
 
 #Choices
 read -p "Do you wish to add default files to child theme? (Yes/No) " child_theme_default_files_yn
+read -p "Is this e-commerce website? (Yes/No) " ecommerce_yn
 read -p "Do you wish to install Astra WP portfolio plugin? (Yes/No) " portfolio_yn
 
 mkdir -p ~/public_html/$foldername && cd ~/public_html/$foldername
@@ -77,6 +78,13 @@ wp scaffold child-theme $theme_slug --theme_name="$TITLE theme" --author="Team W
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
 wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip --activate --quiet
 wp plugin install wordpress-seo advanced-cf7-db --quiet
+
+#Install WooCommerce to preapre store
+case $ecommerce_yn in
+    [Yy]* ) 
+    wp plugin install woocommerce woocommerce-google-analytics-integration woo-razorpay --activate --quiet
+    ;;
+esac
 
 #Activate astra pro
 pro_key=~/.astra-pro
