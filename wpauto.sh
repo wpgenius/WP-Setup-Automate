@@ -83,8 +83,8 @@ wp plugin install wordpress-seo advanced-cf7-db --quiet
 case $ecommerce_yn in
     [Yy]* ) 
     echo -e "${GREEN}Preparing your store with WooCommerce{NC}"
-    wp plugin install woocommerce-google-analytics-integration woo-razorpay woocommerce --quiet
-    wp plugin activate woocommerce woo-razorpay --quiet
+    wp plugin install woo-gst woocommerce-google-analytics-integration woo-razorpay woocommerce --quiet
+    wp plugin activate woocommerce woo-razorpay woo-gst --quiet
     ;;
 esac
 
