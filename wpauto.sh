@@ -88,15 +88,16 @@ wp plugin activate astra-addon astra-pro-sites contact-form-7 elementor ultimate
 #Install WooCommerce to preapre store
 case $ecommerce_yn in
     [Yy]* ) 
-    echo -e "${GREEN}Preparing your store with WooCommerce... {NC}"
-    wp plugin install woo-gst --quiet
+    echo -e "${GREEN}Preparing your store with WooCommerce... ${NC}"
     wp plugin install woocommerce-google-analytics-integration --quiet
-    wp plugin install woo-razorpay --quiet
-    wp plugin install woocommerce --quiet
-    wp plugin activate woocommerce woo-razorpay woo-gst --quiet
+    wp plugin install woo-gst --activate --quiet
+    wp plugin install woo-razorpay --activate --quiet
+    wp plugin install woocommerce --activate --quiet
+    #Update some default options for WooCommmerce
     wp option update woocommerce_email_footer_text "{site_title}" --quiet
     wp option update woocommerce_analytics_enabled 0 --quiet
     wp option update woocommerce_show_marketplace_suggestions 0 --quiet
+    wp option update woocommerce_default_country "IN:MH" --quiet
     wp option update woocommerce_currency INR --quiet
     wp option update woocommerce_email_from_address orders@tyche.work --quiet
     wp post create --post_type=page --post_title="Terms & Conditions" --post_name="terms-conditions" --post_status="publish" --post_author=1 --quiet
@@ -215,4 +216,4 @@ esac
 #Flush rewrite rules
 wp rewrite flush --quiet
 
-echo -e "\n${GREEN}Staging setup is ready ${BLUE}$URL ${NC}"
+echo -e "\n${GREEN}Staging setup is ready ${BLUE}$URL ${NC} \n"
