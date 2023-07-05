@@ -82,12 +82,13 @@ wp plugin activate astra-addon astra-pro-sites contact-form-7 elementor ultimate
 #Install WooCommerce to preapre store
 case $ecommerce_yn in
     [Yy]* ) 
-    echo -e "${GREEN}Preparing your store with WooCommerce{NC}"
+    echo -e "${GREEN}Preparing your store with WooCommerce... {NC}"
     wp plugin install woo-gst woocommerce-google-analytics-integration woo-razorpay woocommerce --quiet
     wp option update woocommerce_email_footer_text "{site_title}" --quiet
     wp plugin activate woocommerce woo-razorpay woo-gst --quiet
     wp option update woocommerce_analytics_enabled 0 --quiet
     wp option update woocommerce_show_marketplace_suggestions 0 --quiet
+    wp option update woocommerce_currency INR --quiet
     wp post create --post_type=page --post_title="Terms & Conditions" --post_name="terms-conditions" --post_status="publish" --post_author=1 --quiet
     wp option update woocommerce_terms_page_id $(wp post list --field=ID --post_type=page --posts_per_page=1) --quiet
     ;;
