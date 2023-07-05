@@ -89,6 +89,7 @@ case $ecommerce_yn in
     wp option update woocommerce_analytics_enabled 0 --quiet
     wp option update woocommerce_show_marketplace_suggestions 0 --quiet
     wp option update woocommerce_currency INR --quiet
+    wp option update woocommerce_email_from_address orders@tyche.work --quiet
     wp post create --post_type=page --post_title="Terms & Conditions" --post_name="terms-conditions" --post_status="publish" --post_author=1 --quiet
     wp option update woocommerce_terms_page_id $(wp post list --field=ID --post_type=page --posts_per_page=1) --quiet
     ;;
