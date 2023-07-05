@@ -70,9 +70,7 @@ echo -e "${GREEN}WordPress installed & configured : ${BLUE}$URL ${NC}"
 wp config set WP_MEMORY_LIMIT 256M  --quiet
 
 #Install astra theme then create & switch to child theme
-wp theme install astra --quiet
-echo -e "${GREEN}Creating child theme for ${BLUE}$foldername${NC}"
-wp scaffold child-theme $theme_slug --theme_name="$TITLE theme" --author="Team WPGenius" --author_uri=https://wpgenius.in --parent_theme=astra --theme_uri=https://$foldername/ --activate=y --enable-network=y --force=y --prompt --quiet
+wp theme install astra --activate --quiet
 
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
@@ -88,15 +86,16 @@ wp plugin activate astra-addon astra-pro-sites contact-form-7 elementor ultimate
 #Install WooCommerce to preapre store
 case $ecommerce_yn in
     [Yy]* ) 
-    echo -e "${GREEN}Preparing your store with WooCommerce... {NC}"
-    wp plugin install woo-gst --quiet
+    echo -e "${GREEN}Preparing your store with WooCommerce... ${NC}"
     wp plugin install woocommerce-google-analytics-integration --quiet
-    wp plugin install woo-razorpay --quiet
-    wp plugin install woocommerce --quiet
-    wp plugin activate woocommerce woo-razorpay woo-gst --quiet
+    wp plugin install woo-gst --activate --quiet
+    wp plugin install woo-razorpay --activate --quiet
+    wp plugin install woocommerce --activate --quiet
+    #Update some default options for WooCommmerce
     wp option update woocommerce_email_footer_text "{site_title}" --quiet
     wp option update woocommerce_analytics_enabled 0 --quiet
     wp option update woocommerce_show_marketplace_suggestions 0 --quiet
+    wp option update woocommerce_default_country "IN:MH" --quiet
     wp option update woocommerce_currency INR --quiet
     wp option update woocommerce_email_from_address orders@tyche.work --quiet
     wp post create --post_type=page --post_title="Terms & Conditions" --post_name="terms-conditions" --post_status="publish" --post_author=1 --quiet
@@ -192,26 +191,37 @@ wp config set WP_ENVIRONMENT_TYPE staging --quiet
 wp config set WP_DISABLE_FATAL_ERROR_HANDLER true --raw --quiet
 wp config set WP_DEFAULT_THEME astra --quiet
 
-#Add default files to child theme
+#Prepare child theme
 case $child_theme_default_files_yn in
     [Yy]* )
-    echo -e "${GREEN}Adding default files to child theme...${NC}"
-    cd wp-content/themes/ && wget https://github.com/wpgenius/Astra-Child-Theme/archive/refs/heads/main.zip -q && unzip -q main.zip && rm Astra-Child-Theme-main/style.css main.zip
-    mv Astra-Child-Theme-main/* $theme_slug && rm -r Astra-Child-Theme-main
-    #Replace words in child theme
-    find ./ -type f -exec sed -i "s/Astra Child Theme/$TITLE/gI"  {} \;
-    find ./ -type f -exec sed -i "s/astra-child-theme/$theme_slug/g"  {} \;
-    #Now fire command made in child theme
-    wp easy_setup    
-    #Import custom layouts
-    echo -e "${GREEN}Importing custom layouts for 404 template & analytics code...${NC}"
-    wp plugin install wordpress-importer --activate --quiet
-    wget https://raw.githubusercontent.com/wpgenius/WP-Setup-Automate/main/bundle/custom-layouts.xml -q && wp import custom-layouts.xml --authors=create --quiet && rm custom-layouts.xml
-    wp plugin deactivate wordpress-importer --quiet && wp plugin delete wordpress-importer --quiet
+        #Add child theme by WPGenius available at https://github.com/wpgenius/Astra-Child-Theme
+        echo -e "${GREEN}Preparing child theme made by WPGenius for Astra...${NC}"
+        cd wp-content/themes/ && wget https://github.com/wpgenius/Astra-Child-Theme/archive/refs/heads/main.zip -q && unzip -q main.zip &&  mv Astra-Child-Theme-main $theme_slug && rm main.zip
+        #Replace words in child theme
+        find ./ -type f -exec sed -i "s/Astra Child Theme/$TITLE/gI"  {} \;
+        find ./ -type f -exec sed -i "s/astra-child-theme/$theme_slug/g"  {} \;
+        find ./ -type f -exec sed -i "s/project-url/$foldername/g"  {} \;
+        echo -e "\n${GREEN}Child theme $theme_slug is ready. ${BLUE}Activating child theme. ${NC} \n"
+        wp theme activate $theme_slug --quiet #Theme activation hook fires wp easy_setup command. No need execute seperately.
+        
+        #Import custom layouts
+        echo -e "${GREEN}Importing custom layouts for 404 template & analytics code...${NC}"
+        wp plugin install wordpress-importer --activate --quiet
+        wget https://raw.githubusercontent.com/wpgenius/WP-Setup-Automate/main/bundle/custom-layouts.xml -q && wp import custom-layouts.xml --authors=create --quiet && rm custom-layouts.xml
+        wp plugin deactivate wordpress-importer --quiet && wp plugin delete wordpress-importer --quiet
+        wp theme activate astra && wp option delete WPG_child_activate --quiet
+        #Instructions for things to do manually
+        echo -e "\n${BLUE}NOTICE :${NC}"
+        echo -e "\n${GREEN}1. Open WAE settings & deactivate all options. \n2. Switch to child theme $theme_slug \n3. Hit permalink page again.${NC}"
     ;;
+    
+    *)
+        echo -e "${GREEN}Creating child theme for ${BLUE}$foldername${NC}"
+        wp scaffold child-theme $theme_slug --theme_name="$TITLE theme" --author="Team WPGenius" --author_uri=https://wpgenius.in --parent_theme=astra --theme_uri=https://$foldername/ --activate=y --enable-network=y --force=y --prompt --quiet
+	;;
 esac
 
 #Flush rewrite rules
 wp rewrite flush --quiet
 
-echo -e "\n${GREEN}Staging setup is ready ${BLUE}$URL ${NC}"
+echo -e "\n${GREEN}Staging setup is ready ${BLUE}$URL ${NC} \n"
