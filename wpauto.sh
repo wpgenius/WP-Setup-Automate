@@ -76,8 +76,8 @@ wp scaffold child-theme $theme_slug --theme_name="$TITLE theme" --author="Team W
 
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
-wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip --activate --quiet
-wp plugin install wordpress-seo advanced-cf7-db --quiet
+wp plugin install contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip advanced-cf7-db wordpress-seo elementor --quiet
+wp plugin activate astra-addon astra-pro-sites contact-form-7 elementor ultimate-elementor --quiet
 
 #Install WooCommerce to preapre store
 case $ecommerce_yn in
