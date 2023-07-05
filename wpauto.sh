@@ -76,16 +76,25 @@ wp scaffold child-theme $theme_slug --theme_name="$TITLE theme" --author="Team W
 
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
-wp plugin install contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip advanced-cf7-db wordpress-seo elementor --quiet
+wp plugin install contact-form-7 --quiet
+wp plugin install https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip --quiet
+wp plugin install https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip --quiet
+wp plugin install https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip --quiet
+wp plugin install advanced-cf7-db --quiet
+wp plugin install wordpress-seo --quiet
+wp plugin install elementor --quiet
 wp plugin activate astra-addon astra-pro-sites contact-form-7 elementor ultimate-elementor --quiet
 
 #Install WooCommerce to preapre store
 case $ecommerce_yn in
     [Yy]* ) 
     echo -e "${GREEN}Preparing your store with WooCommerce... {NC}"
-    wp plugin install woo-gst woocommerce-google-analytics-integration woo-razorpay woocommerce --quiet
-    wp option update woocommerce_email_footer_text "{site_title}" --quiet
+    wp plugin install woo-gst --quiet
+    wp plugin install woocommerce-google-analytics-integration --quiet
+    wp plugin install woo-razorpay --quiet
+    wp plugin install woocommerce --quiet
     wp plugin activate woocommerce woo-razorpay woo-gst --quiet
+    wp option update woocommerce_email_footer_text "{site_title}" --quiet
     wp option update woocommerce_analytics_enabled 0 --quiet
     wp option update woocommerce_show_marketplace_suggestions 0 --quiet
     wp option update woocommerce_currency INR --quiet
