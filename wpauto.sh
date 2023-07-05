@@ -47,6 +47,7 @@ done
 
 #Choices
 read -p "Do you wish to add default files to child theme? (Yes/No) " child_theme_default_files_yn
+read -p "Is this e-commerce website? (Yes/No) " ecommerce_yn
 read -p "Do you wish to install Astra WP portfolio plugin? (Yes/No) " portfolio_yn
 
 mkdir -p ~/public_html/$foldername && cd ~/public_html/$foldername
@@ -75,8 +76,33 @@ wp scaffold child-theme $theme_slug --theme_name="$TITLE theme" --author="Team W
 
 #Install necessory plugins
 echo -e "${GREEN}Installing necessory plugin on ${BLUE}$foldername${NC}"
-wp plugin install elementor contact-form-7 https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip --activate --quiet
-wp plugin install wordpress-seo advanced-cf7-db --quiet
+wp plugin install contact-form-7 --quiet
+wp plugin install https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-addon-plugin.zip --quiet
+wp plugin install https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-elementor.zip --quiet
+wp plugin install https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip --quiet
+wp plugin install advanced-cf7-db --quiet
+wp plugin install wordpress-seo --quiet
+wp plugin install elementor --quiet
+wp plugin activate astra-addon astra-pro-sites contact-form-7 elementor ultimate-elementor --quiet
+
+#Install WooCommerce to preapre store
+case $ecommerce_yn in
+    [Yy]* ) 
+    echo -e "${GREEN}Preparing your store with WooCommerce... {NC}"
+    wp plugin install woo-gst --quiet
+    wp plugin install woocommerce-google-analytics-integration --quiet
+    wp plugin install woo-razorpay --quiet
+    wp plugin install woocommerce --quiet
+    wp plugin activate woocommerce woo-razorpay woo-gst --quiet
+    wp option update woocommerce_email_footer_text "{site_title}" --quiet
+    wp option update woocommerce_analytics_enabled 0 --quiet
+    wp option update woocommerce_show_marketplace_suggestions 0 --quiet
+    wp option update woocommerce_currency INR --quiet
+    wp option update woocommerce_email_from_address orders@tyche.work --quiet
+    wp post create --post_type=page --post_title="Terms & Conditions" --post_name="terms-conditions" --post_status="publish" --post_author=1 --quiet
+    wp option update woocommerce_terms_page_id $(wp post list --field=ID --post_type=page --posts_per_page=1) --quiet
+    ;;
+esac
 
 #Activate astra pro
 pro_key=~/.astra-pro
