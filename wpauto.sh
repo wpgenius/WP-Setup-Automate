@@ -45,8 +45,12 @@ while [[ $dev_name = "" ]]; do
    read dev_name
 done
 
+GITURL=https://bitbucket.org/wpgenius/$theme_slug
+
 #Choices
 read -p "Do you wish to add default files to child theme? (Yes/No) " child_theme_default_files_yn
+echo -e "Have you created bitbucket repository at this address ${GREEN}$GITURL${NC}?"
+read -p "Do you wish to sync child theme to bitbucket repository? (Yes/No) " git_yn
 read -p "Is this e-commerce website? (Yes/No) " ecommerce_yn
 read -p "Do you wish to install Astra WP portfolio plugin? (Yes/No) " portfolio_yn
 
@@ -219,6 +223,20 @@ case $child_theme_default_files_yn in
         echo -e "${GREEN}Creating child theme for ${BLUE}$foldername${NC}"
         wp scaffold child-theme $theme_slug --theme_name="$TITLE theme" --author="Team WPGenius" --author_uri=https://wpgenius.in --parent_theme=astra --theme_uri=https://$foldername/ --activate=y --enable-network=y --force=y --prompt --quiet
 	;;
+esac
+
+#Sync child theme to bitbucket repository
+case $git_yn in
+    [Yy]* ) 
+    echo -e "\n${GREEN}Pushing child theme to bitbucket repository... ${NC}"
+    cd ~/public_html/$foldername/wp-content/themes/$theme_slug
+    git init --quiet
+    git add -A && git commit -m "Initial commit" --quiet
+    git remote add origin git@bitbucket.org:wpgenius/$theme_slug.git && git push -u origin master --quiet #Push Master branch
+    git branch dev && git checkout dev --quiet && git push -u origin dev --quiet  #Create & Push dev branch
+    rm -rf .git 
+    echo -e "${GREEN}Check commit at ${BLUE}$GITURL/commits/${NC}"
+    ;;
 esac
 
 #Flush rewrite rules
