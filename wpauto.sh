@@ -167,13 +167,21 @@ wp option update show_on_front "page" --quiet
 wp option update page_on_front "2" --quiet
 wp option update elementor_disable_color_schemes "yes" --quiet
 wp option update elementor_disable_typography_schemes "yes" --quiet
+wp option update elementor_google_font 0 --quiet
+wp option update elementor_css_print_method "internal" --quiet
+wp option update elementor_meta_generator_tag 1 --quiet
+wp option update elementor_experiment-container "inactive" --quiet
+wp option update elementor_unfiltered_files_upload 0 --quiet
+wp option update elementor_load_fa4_shim "no" --quiet
+wp option update elementor_experiment-landing-pages "inactive" --quiet
+wp option update elementor_font_display "swap" --quiet
 wp option update permalink_structure '/%postname%/' --quiet
 
 #Delete unwanted data
 echo -e "${GREEN}Removing unwanted plugins, themes & posts from ${BLUE}$foldername${NC}"
 wp plugin delete hello akismet --quiet
 wp post delete 1 --force --quiet
-wp theme delete twentytwentyone twentytwentytwo twentytwentythree --quiet
+wp theme delete twentytwentyone twentytwentytwo twentytwentythree twentytwentyfour --quiet
 
 #Update all plugins that have updates will be updated
 wp cron event run wp_update_plugins --quiet
