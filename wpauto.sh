@@ -64,8 +64,15 @@ wp core download --quiet
 echo -e "${GREEN}Creating databse configuration for ${BLUE}$foldername${NC}"
 wp config create --dbname="$dbname" --dbuser="$dbuser" --dbpass="$dbpass" --dbprefix="$dbprefix" --force=y --quiet
 
+#Default Password
+PASSWORD=p@55w0rd!
+pass_file=~/.pass-file
+if [ -r "$pass_file" ]; then
+	PASSWORD=$(<"$pass_file")
+fi
+
 echo -e "${GREEN}Installing WordPress for ${BLUE}$foldername${NC}"
-wp core install --url="$URL" --title="$TITLE" --admin_user=makarand --admin_email=teamwpgenius@gmail.com --admin_password=p@55w0rd! --skip-email=n --quiet
+wp core install --url="$URL" --title="$TITLE" --admin_user=makarand --admin_email=teamwpgenius@gmail.com --admin_password="$PASSWORD" --skip-email=n --quiet
 #Un-comment below lines if above command asks for URL parameter
 #wp option update siteurl "$URL"
 #wp option update home "$URL"
