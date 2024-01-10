@@ -64,8 +64,18 @@ wp core download --quiet
 echo -e "${GREEN}Creating databse configuration for ${BLUE}$foldername${NC}"
 wp config create --dbname="$dbname" --dbuser="$dbuser" --dbpass="$dbpass" --dbprefix="$dbprefix" --force=y --quiet
 
+#Default Password
+PASSWORD=p@55w0rd!
+pass_file=~/.pass-file
+if [ -r "$pass_file" ]; then
+	NEWPASS=$(<"$pass_file")
+	if [[ -n "$NEWPASS" ]]; then
+		PASSWORD=$NEWPASS
+	fi
+fi
+
 echo -e "${GREEN}Installing WordPress for ${BLUE}$foldername${NC}"
-wp core install --url="$URL" --title="$TITLE" --admin_user=makarand --admin_email=mane.makarand@gmail.com --admin_password=p@55w0rd! --skip-email=n --quiet
+wp core install --url="$URL" --title="$TITLE" --admin_user=makarand --admin_email=mane.makarand@gmail.com --admin_password="$PASSWORD" --skip-email=n --quiet
 #Un-comment below lines if above command asks for URL parameter
 #wp option update siteurl "$URL"
 #wp option update home "$URL"
@@ -157,6 +167,7 @@ esac
 echo -e "${GREEN}Setting up default configuration${NC}"
 wp option update blogdescription "" --quiet
 wp option update timezone_string "Asia/Kolkata" --quiet
+wp option update admin_email "teamwpgenius@gmail.com" --quiet
 wp option update blog_public 0 --quiet
 wp option update default_pingback_flag 0 --quiet
 wp option update default_ping_status 0 --quiet
@@ -190,9 +201,12 @@ wp plugin update --all --quiet
 #Create additional users
 echo -e "${GREEN}Creating first developer ${BLUE}$dev_name's ${GREEN}account on ${BLUE}$foldername${NC}"
 wp user create $dev_name $dev_name@wpgenius.in --role=administrator --user_pass= --display_name=$dev_name --send-email=y  --quiet
-wp user reset-password makarand --skip-email --quiet
 
-curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X POST "$URL"wp-login.php?action=lostpassword
+#Reset default password
+if [ $PASSWORD = "p@55w0rd!" ]; then
+	wp user reset-password makarand --skip-email --quiet
+	curl -d "user_login=makarand&amp;redirect_to=&amp;wp-submit=Get New Password" -X POST "$URL"wp-login.php?action=lostpassword
+fi
 
 #Necessory config file variable
 wp config set DISALLOW_FILE_EDIT true --raw --quiet
