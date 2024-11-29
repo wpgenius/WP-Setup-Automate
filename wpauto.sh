@@ -192,7 +192,7 @@ wp option update permalink_structure '/%postname%/' --quiet
 echo -e "${GREEN}Removing unwanted plugins, themes & posts from ${BLUE}$foldername${NC}"
 wp plugin delete hello akismet --quiet
 wp post delete 1 --force --quiet
-wp theme delete twentytwentyone twentytwentytwo twentytwentythree twentytwentyfour --quiet
+wp theme delete twentytwentyone twentytwentytwo twentytwentythree twentytwentyfour twentytwentyfive --quiet
 
 #Update all plugins that have updates will be updated
 wp cron event run wp_update_plugins --quiet
