@@ -209,7 +209,9 @@ if [ $PASSWORD = "p@55w0rd!" ]; then
 fi
 
 #Necessory config file variable
+wp config set WP_DEBUG_LOG true --raw --quiet
 wp config set DISALLOW_FILE_EDIT true --raw --quiet
+wp config set WP_MEMORY_LIMIT 256 --raw --quiet
 wp config set EMPTY_TRASH_DAYS 60 --raw --quiet
 wp config set WP_POST_REVISIONS 40 --raw --quiet
 wp config set AUTOSAVE_INTERVAL 180 --raw --quiet
