@@ -185,6 +185,9 @@ wp option update elementor_experiment-container "inactive" --quiet
 wp option update elementor_unfiltered_files_upload 0 --quiet
 wp option update elementor_load_fa4_shim "no" --quiet
 wp option update elementor_experiment-landing-pages "inactive" --quiet
+wp option update elementor_experiment-e_element_cache "inactive" --quiet
+wp option update elementor_experiment-cloud-library "inactive" --quiet
+wp option update elementor_experiment-e_local_google_fonts "inactive" --quiet
 wp option update elementor_font_display "swap" --quiet
 wp option update permalink_structure '/%postname%/' --quiet
 
