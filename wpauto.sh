@@ -185,6 +185,9 @@ wp option update elementor_experiment-container "inactive" --quiet
 wp option update elementor_unfiltered_files_upload 0 --quiet
 wp option update elementor_load_fa4_shim "no" --quiet
 wp option update elementor_experiment-landing-pages "inactive" --quiet
+wp option update elementor_experiment-e_element_cache "inactive" --quiet
+wp option update elementor_experiment-cloud-library "inactive" --quiet
+wp option update elementor_experiment-e_local_google_fonts "inactive" --quiet
 wp option update elementor_font_display "swap" --quiet
 wp option update permalink_structure '/%postname%/' --quiet
 
@@ -192,7 +195,7 @@ wp option update permalink_structure '/%postname%/' --quiet
 echo -e "${GREEN}Removing unwanted plugins, themes & posts from ${BLUE}$foldername${NC}"
 wp plugin delete hello akismet --quiet
 wp post delete 1 --force --quiet
-wp theme delete twentytwentyone twentytwentytwo twentytwentythree twentytwentyfour --quiet
+wp theme delete twentytwentyone twentytwentytwo twentytwentythree twentytwentyfour twentytwentyfive --quiet
 
 #Update all plugins that have updates will be updated
 wp cron event run wp_update_plugins --quiet
@@ -209,9 +212,13 @@ if [ $PASSWORD = "p@55w0rd!" ]; then
 fi
 
 #Necessory config file variable
+wp config set WP_DEBUG true --raw --quiet
+wp config set WP_DEBUG_DISPLAY false --raw --quiet
+wp config set WP_DEBUG_LOG true --raw --quiet
 wp config set DISALLOW_FILE_EDIT true --raw --quiet
-wp config set EMPTY_TRASH_DAYS 60 --raw --quiet
-wp config set WP_POST_REVISIONS 40 --raw --quiet
+wp config set WP_MEMORY_LIMIT 512M --quiet
+wp config set EMPTY_TRASH_DAYS 30 --raw --quiet
+wp config set WP_POST_REVISIONS 30 --raw --quiet
 wp config set AUTOSAVE_INTERVAL 180 --raw --quiet
 wp config set WP_ENVIRONMENT_TYPE staging --quiet
 wp config set WP_DISABLE_FATAL_ERROR_HANDLER true --raw --quiet
