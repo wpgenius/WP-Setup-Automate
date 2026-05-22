@@ -260,7 +260,7 @@ case $git_yn in
     echo -e "\n${GREEN}Pushing child theme to bitbucket repository... ${NC}"
     cd ~/public_html/$foldername/wp-content/themes/$theme_slug
     git init --quiet
-    git add -A && git commit -m "Initial commit" --quiet
+    git add -A && git add -f .vscode/sftp.json && git commit -m "Initial commit" --quiet
     git remote add origin git@bitbucket.org:wpgenius/$theme_slug.git && git push -u origin master --quiet #Push Master branch
     git branch dev && git checkout dev --quiet && git push -u origin dev --quiet  #Create & Push dev branch
     rm -rf .git 
