@@ -94,6 +94,7 @@ wp plugin install https://wpgenius.github.io/WP-Setup-Automate/bundle/ultimate-e
 wp plugin install https://wpgenius.github.io/WP-Setup-Automate/bundle/astra-premium-sites.zip --quiet
 wp plugin install advanced-cf7-db --quiet
 wp plugin install wordpress-seo --quiet
+wp plugin install wp-migrate-db --quiet
 wp plugin install elementor --quiet
 wp plugin activate astra-addon astra-pro-sites contact-form-7 elementor ultimate-elementor --quiet
 
